@@ -1,4 +1,5 @@
-﻿#include <iostream>
+﻿#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
 #include <windows.h>
 #include <cstring>
 #include <cstdlib>
@@ -234,7 +235,8 @@ void showMainMenu(int mark) {
 		<< ((mark == 9) ? "->" : " ") << "9 - 9 Search\n"
 		<< ((mark == 10) ? "->" : " ") << "10 - 10 Change\n"
 		<< ((mark == 11) ? "->" : " ") << "11 - 11 Sort\n"
-		<< ((mark == 12) ? "->" : " ") << "12 - 12 Esc\n";
+		<< ((mark == 12) ? "->" : " ") << "12 - 12 Filter\n"
+		<< ((mark == 13) ? "->" : " ") << "13 - 13 Esc\n";
 }
 
 void inputData(Cars* car, int COUNT_STRUCT) {
@@ -405,7 +407,7 @@ void mainMenu(Cars * car, int COUNT_STRUCT) {
 	//first of list
 	int MARK = 1;
 	//last of list
-	int last = 12;
+	int last = 13;
 	showMainMenu(MARK);
 
 	char key;
@@ -464,6 +466,9 @@ void mainMenu(Cars * car, int COUNT_STRUCT) {
 				sort(car, COUNT_STRUCT);
 				break;
 			case 12:
+				filter(car, COUNT_STRUCT);
+				break;
+			case 13:
 				exit(111);
 				break;
 			}
@@ -1343,6 +1348,45 @@ void sort(Cars * car, int COUNT_STRUCT) {
 }
 
 void filter(Cars* car, int COUNT_STRUCT) {
-
+	system("cls");
+	int enumerator = 0;
+	if (COUNT_STRUCT == 0 || !car) cout << "DATA IS OUT";
+	else {
+		for (int i = 0; i < COUNT_STRUCT; i++) {
+			if ( strcmp(car[i].mark, "audi") == 0  && car[i].release.year > 1999) {
+				enumerator = 1;
+			}
+		}
+		if (enumerator == 1) {
+		cout <<" I'm a big fan of audi released after 2000. Therefore, I decided to make just such a filter\n"
+			<< "  ----------------------------------------------------------------------------------------------------------------------------------------- \n"
+			<< setw(10) << "№"
+			<< setw(15) << "Mark"
+			<< setw(15) << "Model"
+			<< setw(15) << "Country"
+			<< setw(15) << "Color"
+			<< setw(15) << "Date"
+			<< setw(20) << "Max speed"
+			<< setw(15) << "Engine power"
+			<< setw(15) << "torque" << endl;
+		cout << "  ----------------------------------------------------------------------------------------------------------------------------------------- \n";
+			for (int i = 0; i < COUNT_STRUCT; i++) {
+				if ( strcmp(car[i].mark ,"audi") == 0 && car[i].release.year > 1999) {
+					cout << setw(10) << i + 1
+						<< setw(15) << car[i].mark
+						<< setw(15) << car[i].model
+						<< setw(15) << car[i].manufacturer_country
+						<< setw(15) << car[i].color
+						<< setw(10) << car[i].release.day << "." << car[i].release.month << "." << car[i].release.year
+						<< setw(15) << car[i].max_Speed
+						<< setw(10) << car[i].enginePower
+						<< setw(20) << car[i].torque << endl;
+					cout << "  ----------------------------------------------------------------------------------------------------------------------------------------- \n";
+				}
+			}
+		} else cout << "No data matching filtering";
+	}
+	cout << "\nPress any key to return in main Menu...";
+	_getch();
+	mainMenu(car, COUNT_STRUCT);
 }
-
