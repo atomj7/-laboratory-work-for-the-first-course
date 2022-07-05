@@ -1,0 +1,9 @@
+{
+  "contractTooolApp": {
+    "LifecycleStatus": {
+      "null": "",
+      "ACTUAL": "ACTUAL",
+      "DELETED": "DELETED"
+    }
+  }
+}
